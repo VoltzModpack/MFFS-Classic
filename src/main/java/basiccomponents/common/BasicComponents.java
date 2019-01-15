@@ -339,7 +339,7 @@ public class BasicComponents {
 
 		if (mod != null) {
 			bcDependants.add(mod);
-			NetworkRegistry.instance().registerGuiHandler(mod, new BCGuiHandler());
+			NetworkRegistry.INSTANCE.registerGuiHandler(mod, new BCGuiHandler());
 		}
 
 		return new ItemStack(blockMachine);

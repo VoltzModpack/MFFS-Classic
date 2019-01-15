@@ -20,10 +20,10 @@ public class BlockDropDelayedEvent extends DelayedEvent {
 	}
 
 	protected void onEvent() {
-		if (this.position.getBlockID(this.world) == this.block.blockID) {
+		if (this.position.getBlock(this.world) == this.block) {
 			this.block.dropBlockAsItem(this.world, this.position.intX(), this.position.intY(), this.position.intZ(), this.position.getBlockMetadata(this.world), 0);
-			this.position.setBlock(this.world, 0);
+			this.position.setAir(this.world);
 		}
-
 	}
+
 }

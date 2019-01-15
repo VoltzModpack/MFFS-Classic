@@ -4,6 +4,7 @@ import mffs.DelayedEvent;
 import mffs.IDelayedEventHandler;
 import mffs.ManipulatorHelper;
 import mffs.api.ISpecialForceManipulation;
+import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -29,7 +30,7 @@ public class BlockPreMoveDelayedEvent extends DelayedEvent {
 				((ISpecialForceManipulation) tileEntity).move(this.newPosition.intX(), this.newPosition.intY(), this.newPosition.intZ());
 			}
 
-			int blockID = this.position.getBlockID(this.world);
+			Block block = this.position.getBlock(this.world);
 			int blockMetadata = this.position.getBlockMetadata(this.world);
 			NBTTagCompound tileData = new NBTTagCompound();
 			if (tileEntity != null) {
@@ -37,7 +38,7 @@ public class BlockPreMoveDelayedEvent extends DelayedEvent {
 			}
 
 			ManipulatorHelper.setBlockSneaky(this.world, this.position, 0, 0, (TileEntity) null);
-			super.handler.getQuedDelayedEvents().add(new BlockPostMoveDelayedEvent(super.handler, 0, this.world, this.position, this.newPosition, blockID, blockMetadata, tileEntity, tileData));
+			super.handler.getQuedDelayedEvents().add(new BlockPostMoveDelayedEvent(super.handler, 0, this.world, this.position, this.newPosition, block, blockMetadata, tileEntity, tileData));
 		}
 
 	}

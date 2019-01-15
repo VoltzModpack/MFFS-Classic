@@ -35,7 +35,7 @@ public class GuiInterdictionMatrix extends GuiBase {
 	}
 
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
-		super.fontRenderer.drawString(this.tileEntity.getInvName(), super.xSize / 2 - super.fontRenderer.getStringWidth(this.tileEntity.getInvName()) / 2, 6, 4210752);
+		super.fontRendererObj.drawString(this.tileEntity.getInvName(), super.xSize / 2 - super.fontRendererObj.getStringWidth(this.tileEntity.getInvName()) / 2, 6, 4210752);
 		this.drawTextWithTooltip("warn", "%1: " + this.tileEntity.getWarningRange(), 35, 19, x, y);
 		this.drawTextWithTooltip("action", "%1: " + this.tileEntity.getActionRange(), 100, 19, x, y);
 		this.drawTextWithTooltip("filterMode", "%1:", 9, 32, x, y);
@@ -50,7 +50,7 @@ public class GuiInterdictionMatrix extends GuiBase {
 		this.drawTextWithTooltip("frequency", "%1:", 8, 93, x, y);
 		super.textFieldFrequency.drawTextBox();
 		this.drawTextWithTooltip("fortron", "%1: " + ElectricityDisplay.getDisplayShort((double) this.tileEntity.getFortronEnergy(), ElectricityDisplay.ElectricUnit.JOULES) + "/" + ElectricityDisplay.getDisplayShort((double) this.tileEntity.getFortronCapacity(), ElectricityDisplay.ElectricUnit.JOULES), 8, 110, x, y);
-		super.fontRenderer.drawString("§4-" + ElectricityDisplay.getDisplayShort((double) (this.tileEntity.getFortronCost() * 20), ElectricityDisplay.ElectricUnit.JOULES), 120, 121, 4210752);
+		super.fontRendererObj.drawString("§4-" + ElectricityDisplay.getDisplayShort((double) (this.tileEntity.getFortronCost() * 20), ElectricityDisplay.ElectricUnit.JOULES), 120, 121, 4210752);
 		super.drawGuiContainerForegroundLayer(x, y);
 	}
 

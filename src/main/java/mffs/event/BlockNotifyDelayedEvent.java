@@ -22,7 +22,7 @@ public class BlockNotifyDelayedEvent extends DelayedEvent {
 
 	protected void onEvent() {
 		if (!this.world.isRemote) {
-			this.world.notifyBlocksOfNeighborChange(this.position.intX(), this.position.intY(), this.position.intZ(), this.position.getBlockID(this.world));
+			this.world.notifyBlocksOfNeighborChange(this.position.intX(), this.position.intY(), this.position.intZ(), this.position.getBlock(this.world));
 			TileEntity newTile = this.position.getTileEntity(this.world);
 			if (newTile != null) {
 				if (newTile instanceof ISpecialForceManipulation) {
@@ -41,6 +41,6 @@ public class BlockNotifyDelayedEvent extends DelayedEvent {
 				}
 			}
 		}
-
 	}
+
 }

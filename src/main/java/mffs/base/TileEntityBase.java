@@ -13,7 +13,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import universalelectricity.prefab.implement.IRedstoneReceptor;
 import universalelectricity.prefab.implement.IRotatable;
 import universalelectricity.prefab.network.IPacketReceiver;
@@ -72,7 +72,7 @@ public abstract class TileEntityBase extends TileEntityDisableable implements IP
 			boolean prevActive = this.isActive;
 			this.isActive = dataStream.readBoolean();
 			if (prevActive != this.isActive) {
-				super.worldObj.markBlockForRenderUpdate(super.xCoord, super.yCoord, super.zCoord);
+				super.worldObj.markBlockForUpdate(super.xCoord, super.yCoord, super.zCoord);
 			}
 		} else if (packetID == TileEntityBase.TilePacketType.TOGGLE_ACTIVATION.ordinal()) {
 			this.isRedstoneActive = !this.isRedstoneActive;

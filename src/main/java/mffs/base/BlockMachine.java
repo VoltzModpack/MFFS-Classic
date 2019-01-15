@@ -11,6 +11,7 @@ import mffs.api.security.Permission;
 import mffs.item.card.ItemCardLink;
 import mffs.render.RenderBlockHandler;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,7 +28,7 @@ public abstract class BlockMachine extends BlockRotatable implements ICamouflage
 		this.setUnlocalizedName("mffs:" + name);
 		this.setHardness(Float.MAX_VALUE);
 		this.setResistance(100.0F);
-		this.setStepSound(Block.soundMetalFootstep);
+		this.setStepSound(Block.soundTypeMetal);
 		this.setCreativeTab(MFFSCreativeTab.INSTANCE);
 	}
 
@@ -49,7 +50,7 @@ public abstract class BlockMachine extends BlockRotatable implements ICamouflage
 
 	public boolean onSneakUseWrench(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
-			TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+			TileEntity tileEntity = world.getTileEntity(x, y, z);
 			if (tileEntity instanceof IBiometricIdentifierLink) {
 				if (((IBiometricIdentifierLink) tileEntity).getBiometricIdentifier() == null) {
 					this.dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
@@ -57,7 +58,8 @@ public abstract class BlockMachine extends BlockRotatable implements ICamouflage
 					return true;
 				}
 
-				if (((IBiometricIdentifierLink) tileEntity).getBiometricIdentifier().isAccessGranted(entityPlayer.username, Permission.SECURITY_CENTER_CONFIGURE)) {
+				if (((IBiometricIdentifierLink) tileEntity).getBiometricIdentifier()
+					    .isAccessGranted(entityPlayer.getCommandSenderName(), Permission.SECURITY_CENTER_CONFIGURE)) {
 					this.dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
 					world.setBlock(x, y, z, 0);
 					return true;
@@ -72,7 +74,7 @@ public abstract class BlockMachine extends BlockRotatable implements ICamouflage
 
 	public void onNeighborBlockChange(World world, int x, int y, int z, int blockID) {
 		if (!world.isRemote) {
-			TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+			TileEntity tileEntity = world.getTileEntity(x, y, z);
 			if (tileEntity instanceof IRedstoneReceptor) {
 				if (world.isBlockIndirectlyGettingPowered(x, y, z)) {
 					((IRedstoneReceptor) tileEntity).onPowerOn();
@@ -88,7 +90,7 @@ public abstract class BlockMachine extends BlockRotatable implements ICamouflage
 		return 100.0F;
 	}
 
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerIcons(IIconRegister par1IconRegister) {
 		super.blockIcon = par1IconRegister.registerIcon("mffs:machine");
 	}
 

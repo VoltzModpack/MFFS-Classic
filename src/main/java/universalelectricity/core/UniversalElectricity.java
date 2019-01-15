@@ -3,7 +3,7 @@ package universalelectricity.core;
 import cpw.mods.fml.common.Loader;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
 

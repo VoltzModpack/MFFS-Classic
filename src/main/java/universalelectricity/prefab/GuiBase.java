@@ -49,7 +49,7 @@ public abstract class GuiBase extends GuiScreen {
 	protected abstract void drawBackgroundLayer(int var1, int var2, float var3);
 
 	protected void keyTyped(char x, int y) {
-		if (y == 1 || y == super.mc.gameSettings.keyBindInventory.keyCode) {
+		if (y == 1 || y == super.mc.gameSettings.keyBindInventory.getKeyCode()) {
 			super.mc.thePlayer.closeScreen();
 		}
 
@@ -78,7 +78,7 @@ public abstract class GuiBase extends GuiScreen {
 			int var6;
 			int var7;
 			for (var6 = 0; var6 < toolTips.length; ++var6) {
-				var7 = super.fontRenderer.getStringWidth(toolTips[var6]);
+				var7 = super.fontRendererObj.getStringWidth(toolTips[var6]);
 				if (var7 > var5) {
 					var5 = var7;
 				}

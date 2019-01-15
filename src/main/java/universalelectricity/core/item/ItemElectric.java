@@ -14,7 +14,6 @@ import java.util.List;
 public abstract class ItemElectric extends Item implements IItemElectric {
 
 	public ItemElectric(int id) {
-		super(id);
 		this.setMaxStackSize(1);
 		this.setMaxDamage(100);
 		this.setNoRepair();

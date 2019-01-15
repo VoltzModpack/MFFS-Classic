@@ -20,8 +20,8 @@ public class BlockInventoryDropDelayedEvent extends BlockDropDelayedEvent {
 	}
 
 	protected void onEvent() {
-		if (super.position.getBlockID(super.world) == super.block.blockID) {
-			ArrayList itemStacks = super.block.getBlockDropped(super.world, super.position.intX(), super.position.intY(), super.position.intZ(), super.position.getBlockMetadata(super.world), 0);
+		if (super.position.getBlock(super.world) == super.block) {
+			ArrayList itemStacks = super.block.getDrops(super.world, super.position.intX(), super.position.intY(), super.position.intZ(), super.position.getBlockMetadata(super.world), 0);
 			Iterator i$ = itemStacks.iterator();
 
 			while (i$.hasNext()) {
@@ -29,7 +29,7 @@ public class BlockInventoryDropDelayedEvent extends BlockDropDelayedEvent {
 				this.projector.mergeIntoInventory(itemStack);
 			}
 
-			super.position.setBlock(super.world, 0);
+			super.position.setBlock(super.world, );
 		}
 
 	}

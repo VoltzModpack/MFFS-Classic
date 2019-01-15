@@ -4,7 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -20,8 +20,8 @@ public class BlockMulti extends BlockContainer {
 	public String textureName = null;
 	public String channel = "";
 
-	public BlockMulti(int id) {
-		super(id, UniversalElectricity.machine);
+	public BlockMulti() {
+		super(UniversalElectricity.machine);
 		this.setHardness(0.8F);
 		this.setUnlocalizedName("multiBlock");
 	}
@@ -38,11 +38,11 @@ public class BlockMulti extends BlockContainer {
 
 	public void makeFakeBlock(World worldObj, Vector3 position, Vector3 mainBlock) {
 		worldObj.setBlock(position.intX(), position.intY(), position.intZ(), super.blockID);
-		((TileEntityMulti) worldObj.getBlockTileEntity(position.intX(), position.intY(), position.intZ())).setMainBlock(mainBlock);
+		((TileEntityMulti) worldObj.getTileEntity(position.intX(), position.intY(), position.intZ())).setMainBlock(mainBlock);
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
+	public void registerIcons(IIconRegister iconRegister) {
 		if (this.textureName != null) {
 			super.blockIcon = iconRegister.registerIcon(this.textureName);
 		} else {
@@ -52,7 +52,7 @@ public class BlockMulti extends BlockContainer {
 	}
 
 	public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
-		TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (tileEntity instanceof TileEntityMulti) {
 			((TileEntityMulti) tileEntity).onBlockRemoval();
 		}
@@ -61,7 +61,7 @@ public class BlockMulti extends BlockContainer {
 	}
 
 	public boolean onBlockActivated(World par1World, int x, int y, int z, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
-		TileEntityMulti tileEntity = (TileEntityMulti) par1World.getBlockTileEntity(x, y, z);
+		TileEntityMulti tileEntity = (TileEntityMulti) par1World.getTileEntity(x, y, z);
 		return tileEntity.onBlockActivated(par1World, x, y, z, par5EntityPlayer);
 	}
 
@@ -86,7 +86,7 @@ public class BlockMulti extends BlockContainer {
 	}
 
 	public ItemStack getPickBlock(MovingObjectPosition target, World par1World, int x, int y, int z) {
-		TileEntity tileEntity = par1World.getBlockTileEntity(x, y, z);
+		TileEntity tileEntity = par1World.getTileEntity(x, y, z);
 		Vector3 mainBlockPosition = ((TileEntityMulti) tileEntity).mainBlockPosition;
 		if (mainBlockPosition != null) {
 			int mainBlockID = par1World.getBlockId(mainBlockPosition.intX(), mainBlockPosition.intY(), mainBlockPosition.intZ());

@@ -1,5 +1,6 @@
 package universalelectricity.prefab.block;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
@@ -15,8 +16,9 @@ import java.util.Random;
 
 public abstract class BlockAdvanced extends BlockContainer {
 
-	public BlockAdvanced(int id, Material material) {
-		super(id, material);
+	public BlockAdvanced(Material material) {
+		super(material);
+//		super(id, material);
 		this.setHardness(0.6F);
 	}
 
@@ -103,13 +105,13 @@ public abstract class BlockAdvanced extends BlockContainer {
 		return null;
 	}
 
-	public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
-		this.dropEntireInventory(world, x, y, z, par5, par6);
-		super.breakBlock(world, x, y, z, par5, par6);
+	public void breakBlock(World world, int x, int y, int z, Block block, int par6) {
+		this.dropEntireInventory(world, x, y, z, block, par6);
+		super.breakBlock(world, x, y, z, block, par6);
 	}
 
-	public void dropEntireInventory(World world, int x, int y, int z, int par5, int par6) {
-		TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+	public void dropEntireInventory(World world, int x, int y, int z, Block block, int par6) {
+		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (tileEntity != null && tileEntity instanceof IInventory) {
 			IInventory inventory = (IInventory) tileEntity;
 

@@ -4,7 +4,7 @@ import mffs.api.modules.IModule;
 import mffs.api.modules.IModuleAcceptor;
 import mffs.api.modules.IProjectorMode;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import universalelectricity.core.vector.Vector3;
 import universalelectricity.prefab.implement.IRotatable;
 

@@ -70,7 +70,7 @@ public class NBTFileLoader {
 	public static File getBaseDirectory() {
 		if (FMLCommonHandler.instance().getSide().isClient()) {
 			FMLClientHandler.instance().getClient();
-			return Minecraft.getMinecraftDir();
+			return Minecraft.getMinecraft().mcDataDir;
 		} else {
 			return new File(".");
 		}

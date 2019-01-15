@@ -1,6 +1,6 @@
 package universalelectricity.core.block;
 
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public interface IConnector {
 

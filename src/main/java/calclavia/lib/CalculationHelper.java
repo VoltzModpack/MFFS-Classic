@@ -51,7 +51,7 @@ public class CalculationHelper {
 		Vec3 look = getDeltaPositionFromRotation(rotationYaw, rotationPitch).toVec3();
 		Vec3 reachPoint = Vec3.createVectorHelper(startingPosition.xCoord + look.xCoord * reachDistance, startingPosition.yCoord + look.yCoord * reachDistance, startingPosition.zCoord + look.zCoord * reachDistance);
 		double playerBorder = 1.1D * reachDistance;
-		AxisAlignedBB boxToScan = AxisAlignedBB.getAABBPool().getAABB(-playerBorder, -playerBorder, -playerBorder, playerBorder, playerBorder, playerBorder);
+		AxisAlignedBB boxToScan = AxisAlignedBB.getBoundingBox(-playerBorder, -playerBorder, -playerBorder, playerBorder, playerBorder, playerBorder);
 		List entitiesHit = world.getEntitiesWithinAABBExcludingEntity((Entity) null, boxToScan);
 		double closestEntity = reachDistance;
 		if (entitiesHit != null && !entitiesHit.isEmpty()) {
@@ -108,7 +108,7 @@ public class CalculationHelper {
 	public static MovingObjectPosition raytraceBlocks(World world, Vector3 startPosition, float rotationYaw, float rotationPitch, boolean collisionFlag, double reachDistance) {
 		Vector3 lookVector = getDeltaPositionFromRotation(rotationYaw, rotationPitch);
 		Vector3 reachPoint = Vector3.add(startPosition, Vector3.multiply(lookVector, reachDistance));
-		return world.rayTraceBlocks_do_do(startPosition.toVec3(), reachPoint.toVec3(), collisionFlag, !collisionFlag);
+		return world.rayTraceBlocks(startPosition.toVec3(), reachPoint.toVec3(), collisionFlag, !collisionFlag);
 	}
 
 	public static MovingObjectPosition doCustomRayTrace(World world, Vector3 startPosition, float rotationYaw, float rotationPitch, boolean collisionFlag, double reachDistance) {

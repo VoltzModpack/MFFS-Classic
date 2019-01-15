@@ -1,6 +1,6 @@
 package universalelectricity.core.path;
 
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import universalelectricity.core.vector.Vector3;
 
 import java.util.HashMap;

@@ -2,7 +2,7 @@ package universalelectricity.core.vector;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import universalelectricity.core.block.IConnector;
 
 public class VectorHelper {

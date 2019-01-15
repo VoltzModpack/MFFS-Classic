@@ -1,10 +1,12 @@
 package mffs.fortron;
 
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
 public class FortronHelper {
 
+	public static Fluid FLUID_FORTRON;
 	public static FluidStack LIQUID_FORTRON;
 
 	public static FluidStack getFortron(int amount) {

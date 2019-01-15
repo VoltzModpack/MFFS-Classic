@@ -9,4 +9,5 @@ public class ItemCard extends ItemBase implements ICard {
 		super(id, name);
 		this.setMaxStackSize(1);
 	}
+	
 }

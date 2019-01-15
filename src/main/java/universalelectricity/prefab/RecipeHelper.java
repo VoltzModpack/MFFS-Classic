@@ -4,7 +4,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -84,7 +84,8 @@ public class RecipeHelper {
 			}
 
 			obj = i$.next();
-		} while (obj == null || !(obj instanceof IRecipe) || ((IRecipe) obj).getRecipeOutput() == null || !((IRecipe) obj).getRecipeOutput().isItemEqual(stack));
+		}
+		while (obj == null || !(obj instanceof IRecipe) || ((IRecipe) obj).getRecipeOutput() == null || !((IRecipe) obj).getRecipeOutput().isItemEqual(stack));
 
 		CraftingManager.getInstance().getRecipeList().remove(obj);
 		return true;
@@ -137,6 +138,7 @@ public class RecipeHelper {
 	}
 
 	public static void addRecipe(IRecipe recipe, Configuration config, boolean defaultBoolean) {
-		addRecipe(recipe, recipe.getRecipeOutput().getItemName(), config, defaultBoolean);
+		addRecipe(recipe, recipe.getRecipeOutput().getUnlocalizedName(), config, defaultBoolean);
 	}
+
 }

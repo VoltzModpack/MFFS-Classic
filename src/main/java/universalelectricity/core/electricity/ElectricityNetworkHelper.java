@@ -1,7 +1,7 @@
 package universalelectricity.core.electricity;
 
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import universalelectricity.core.block.IConnector;
 import universalelectricity.core.block.INetworkProvider;
 import universalelectricity.core.vector.Vector3;
@@ -17,7 +17,7 @@ public class ElectricityNetworkHelper {
 	public static void invalidate(TileEntity tileEntity) {
 		for (int i = 0; i < 6; ++i) {
 			ForgeDirection direction = ForgeDirection.getOrientation(i);
-			TileEntity checkTile = VectorHelper.getConnectorFromSide(tileEntity.worldObj, new Vector3(tileEntity), direction);
+			TileEntity checkTile = VectorHelper.getConnectorFromSide(tileEntity.getWorldObj(), new Vector3(tileEntity), direction);
 			if (checkTile instanceof INetworkProvider) {
 				IElectricityNetwork network = ((INetworkProvider) checkTile).getNetwork();
 				if (network != null) {
@@ -120,7 +120,7 @@ public class ElectricityNetworkHelper {
 			if (approachingDirection.contains(direction)) {
 				Vector3 position = new Vector3(tileEntity);
 				position.modifyPositionFromSide(direction);
-				TileEntity outputConductor = position.getTileEntity(tileEntity.worldObj);
+				TileEntity outputConductor = position.getTileEntity(tileEntity.getWorldObj());
 				IElectricityNetwork electricityNetwork = getNetworkFromTileEntity(outputConductor, direction);
 				if (electricityNetwork != null && !connectedNetworks.contains(connectedNetworks)) {
 					connectedNetworks.add(electricityNetwork);

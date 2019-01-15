@@ -9,7 +9,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
-import net.minecraftforge.liquids.LiquidStack;
+import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import universalelectricity.core.vector.Vector2;
@@ -93,7 +93,7 @@ public class GuiContainerBase extends GuiContainer {
 		++x;
 		++y;
 		GL11.glTranslatef(0.0F, 0.0F, 32.0F);
-		GuiContainer.itemRenderer.renderItemAndEffectIntoGUI(super.fontRenderer, super.mc.renderEngine, itemStack, x, y);
+		GuiContainer.itemRenderer.renderItemAndEffectIntoGUI(super.fontRendererObj, super.mc.renderEngine, itemStack, x, y);
 	}
 
 	protected void drawTextWithTooltip(String textName, String format, int x, int y, int mouseX, int mouseY) {
@@ -163,7 +163,7 @@ public class GuiContainerBase extends GuiContainer {
 
 	}
 
-	protected void drawMeter(int x, int y, float scale, LiquidStack liquidStack) {
+	protected void drawMeter(int x, int y, float scale, FluidStack liquidStack) {
 		super.mc.renderEngine.bindTexture("/mods/calclavia/textures/gui/gui_base.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.drawTexturedModalRect(this.containerWidth + x, this.containerHeight + y, 40, 0, 14, 49);

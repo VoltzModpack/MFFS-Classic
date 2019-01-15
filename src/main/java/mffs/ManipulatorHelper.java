@@ -1,6 +1,7 @@
 package mffs;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
+import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
@@ -14,7 +15,7 @@ public class ManipulatorHelper {
 	public static final String[] CHUNK_RELIGHT_BLOCK = new String[]{"relightBlock", "func_76615_h"};
 	public static final String[] CHUNK_PROPOGATE_SKY_LIGHT_OCCLUSION = new String[]{"propagateSkylightOcclusion", "func_76595_e"};
 
-	public static void setBlockSneaky(World world, Vector3 position, int id, int metadata, TileEntity tileEntity) {
+	public static void setBlockSneaky(World world, Vector3 position, Block block, int metadata, TileEntity tileEntity) {
 		Chunk chunk = world.getChunkFromChunkCoords(position.intX() >> 4, position.intZ() >> 4);
 		Vector3 chunkPosition = new Vector3((double) (position.intX() & 15), (double) (position.intY() & 15), (double) (position.intZ() & 15));
 		int heightMapIndex = chunkPosition.intZ() << 4 | chunkPosition.intX();
@@ -23,7 +24,7 @@ public class ManipulatorHelper {
 		}
 
 		int heightMapValue = chunk.heightMap[heightMapIndex];
-		world.removeBlockTileEntity(position.intX(), position.intY(), position.intZ());
+		world.removeTileEntity(position.intX(), position.intY(), position.intZ());
 		ExtendedBlockStorage extendedBlockStorage = chunk.getBlockStorageArray()[position.intY() >> 4];
 		if (extendedBlockStorage == null) {
 			extendedBlockStorage = new ExtendedBlockStorage(position.intY() >> 4 << 4, !world.provider.hasNoSky);
@@ -47,9 +48,9 @@ public class ManipulatorHelper {
 		}
 
 		chunk.isModified = true;
-		world.updateAllLightTypes(position.intX(), position.intY(), position.intZ());
+//		world.updateAllLightTypes(position.intX(), position.intY(), position.intZ());
 		if (tileEntity != null) {
-			world.setBlockTileEntity(position.intX(), position.intY(), position.intZ(), tileEntity);
+			world.setTileEntity(position.intX(), position.intY(), position.intZ(), tileEntity);
 		}
 
 		world.markBlockForUpdate(position.intX(), position.intY(), position.intZ());

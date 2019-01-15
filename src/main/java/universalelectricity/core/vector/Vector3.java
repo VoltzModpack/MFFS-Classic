@@ -1,12 +1,13 @@
 package universalelectricity.core.vector;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.List;
 
@@ -78,8 +79,8 @@ public class Vector3 implements Cloneable {
 		return new Vector3(this.x, this.y, this.z);
 	}
 
-	public int getBlockID(IBlockAccess world) {
-		return world.getBlockId(this.intX(), this.intY(), this.intZ());
+	public Block getBlock(IBlockAccess world) {
+		return world.getBlock(this.intX(), this.intY(), this.intZ());
 	}
 
 	public int getBlockMetadata(IBlockAccess world) {
@@ -87,19 +88,23 @@ public class Vector3 implements Cloneable {
 	}
 
 	public TileEntity getTileEntity(IBlockAccess world) {
-		return world.getBlockTileEntity(this.intX(), this.intY(), this.intZ());
+		return world.getTileEntity(this.intX(), this.intY(), this.intZ());
 	}
 
-	public boolean setBlock(World world, int id, int metadata, int notify) {
-		return world.setBlock(this.intX(), this.intY(), this.intZ(), id, metadata, notify);
+	public boolean setBlock(World world, Block block, int metadata, int notify) {
+		return world.setBlock(this.intX(), this.intY(), this.intZ(), block, metadata, notify);
 	}
 
-	public boolean setBlock(World world, int id, int metadata) {
-		return this.setBlock(world, id, metadata, 3);
+	public boolean setAir(World world) {
+		return world.setBlockToAir(this.intX(), this.intY(), this.intZ());
 	}
 
-	public boolean setBlock(World world, int id) {
-		return this.setBlock(world, id, 0);
+	public boolean setBlock(World world, Block block, int metadata) {
+		return this.setBlock(world, block, metadata, 3);
+	}
+
+	public boolean setBlock(World world, Block block) {
+		return this.setBlock(world, block, 0);
 	}
 
 	public Vector2 toVector2() {

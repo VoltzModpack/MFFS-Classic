@@ -1,6 +1,5 @@
 package mffs.gui;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
 import mffs.api.card.ICardIdentification;
 import mffs.api.security.Permission;
 import mffs.base.GuiBase;
@@ -29,7 +28,7 @@ public class GuiBiometricIdentifier extends GuiBase {
 	public void initGui() {
 		super.textFieldPos = new Vector2(109.0D, 92.0D);
 		super.initGui();
-		this.textFieldUsername = new GuiTextField(super.fontRenderer, 52, 18, 90, 12);
+		this.textFieldUsername = new GuiTextField(super.fontRendererObj, 52, 18, 90, 12);
 		this.textFieldUsername.setMaxStringLength(30);
 		int x = 0;
 		int y = 0;
@@ -46,7 +45,7 @@ public class GuiBiometricIdentifier extends GuiBase {
 	}
 
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
-		super.fontRenderer.drawString(this.tileEntity.getInvName(), super.xSize / 2 - super.fontRenderer.getStringWidth(this.tileEntity.getInvName()) / 2, 6, 4210752);
+		super.fontRendererObj.drawString(this.tileEntity.getInvName(), super.xSize / 2 - super.fontRendererObj.getStringWidth(this.tileEntity.getInvName()) / 2, 6, 4210752);
 		this.drawTextWithTooltip("rights", "%1", 8, 32, x, y, 0);
 
 		try {
@@ -84,7 +83,7 @@ public class GuiBiometricIdentifier extends GuiBase {
 		}
 
 		super.textFieldFrequency.drawTextBox();
-		this.drawTextWithTooltip("master", 28, 90 + super.fontRenderer.FONT_HEIGHT / 2, x, y);
+		this.drawTextWithTooltip("master", 28, 90 + super.fontRendererObj.FONT_HEIGHT / 2, x, y);
 		super.drawGuiContainerForegroundLayer(x, y);
 	}
 

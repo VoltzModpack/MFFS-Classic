@@ -2,9 +2,9 @@ package universalelectricity.prefab.network;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
-import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import ibxm.Player;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,7 +19,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class PacketManager implements IPacketHandler, IPacketReceiver {
+public class PacketManager implements IMessageHandler, IPacketReceiver {
 
 	public static void writeNBTTagCompound(NBTTagCompound tag, DataOutputStream dataStream) throws IOException {
 		if (tag == null) {
@@ -165,7 +165,7 @@ public class PacketManager implements IPacketHandler, IPacketReceiver {
 				int z = data.readInt();
 				World world = ((EntityPlayer) player).worldObj;
 				if (world != null) {
-					TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+					TileEntity tileEntity = world.getTileEntity(x, y, z);
 					if (tileEntity != null && tileEntity instanceof IPacketReceiver) {
 						((IPacketReceiver) tileEntity).handlePacketData(network, packetTypeID, packet, (EntityPlayer) player, data);
 					}

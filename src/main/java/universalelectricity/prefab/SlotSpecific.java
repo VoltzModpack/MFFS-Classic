@@ -49,18 +49,18 @@ public class SlotSpecific extends Slot {
 		int i$;
 		for (i$ = 0; i$ < len$; ++i$) {
 			ItemStack itemStack = arr$[i$];
-			if (compareStack.isItemEqual(itemStack) || !this.isMetadataSensitive && compareStack.itemID == itemStack.itemID) {
+			if (compareStack.isItemEqual(itemStack) || !this.isMetadataSensitive) {
 				returnValue = true;
 				break;
 			}
 		}
 
 		if (!returnValue) {
-			Class[] arr$ = this.validClasses;
-			len$ = arr$.length;
+			Class[] arr = this.validClasses;
+			len$ = arr.length;
 
 			for (i$ = 0; i$ < len$; ++i$) {
-				Class clazz = arr$[i$];
+				Class clazz = arr[i$];
 				if (clazz.equals(compareStack.getItem().getClass()) || clazz.isInstance(compareStack.getItem())) {
 					returnValue = true;
 					break;

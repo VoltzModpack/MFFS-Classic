@@ -7,13 +7,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import universalelectricity.prefab.implement.IRotatable;
 
 public abstract class BlockRotatable extends BlockAdvanced implements IRotatable {
 
-	public BlockRotatable(int id, Material material) {
-		super(id, material);
+	public BlockRotatable(Material material) {
+		super(material);
 	}
 
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving entityLiving, ItemStack itemStack) {

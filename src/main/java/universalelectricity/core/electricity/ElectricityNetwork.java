@@ -2,7 +2,7 @@ package universalelectricity.core.electricity;
 
 import cpw.mods.fml.common.FMLLog;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import universalelectricity.core.block.IConductor;
 import universalelectricity.core.block.IConnectionProvider;
 import universalelectricity.core.block.INetworkProvider;
@@ -86,7 +86,7 @@ public class ElectricityNetwork implements IElectricityNetwork {
 					it.remove();
 				} else if (tileEntity.isInvalid()) {
 					it.remove();
-				} else if (tileEntity.worldObj.getBlockTileEntity(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord) != tileEntity) {
+				} else if (tileEntity.getWorldObj().getTileEntity(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord) != tileEntity) {
 					it.remove();
 				} else {
 					if (ignoreTiles != null) {
@@ -131,7 +131,7 @@ public class ElectricityNetwork implements IElectricityNetwork {
 					it.remove();
 				} else if (tileEntity.isInvalid()) {
 					it.remove();
-				} else if (tileEntity.worldObj.getBlockTileEntity(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord) != tileEntity) {
+				} else if (tileEntity.getWorldObj().getTileEntity(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord) != tileEntity) {
 					it.remove();
 				} else {
 					ElectricityPack pack = (ElectricityPack) pairs.getValue();
@@ -278,7 +278,7 @@ public class ElectricityNetwork implements IElectricityNetwork {
 				ForgeDirection dir = arr$[i$];
 				if (dir != ForgeDirection.UNKNOWN) {
 					Vector3 splitVec = new Vector3((TileEntity) splitPoint);
-					TileEntity tileAroundSplit = VectorHelper.getTileEntityFromSide(((TileEntity) splitPoint).worldObj, splitVec, dir);
+					TileEntity tileAroundSplit = VectorHelper.getTileEntityFromSide(((TileEntity) splitPoint).getWorldObj(), splitVec, dir);
 					if (this.producers.containsKey(tileAroundSplit)) {
 						this.stopProducing(tileAroundSplit);
 						this.stopRequesting(tileAroundSplit);
@@ -294,14 +294,14 @@ public class ElectricityNetwork implements IElectricityNetwork {
 					for (int ii = 0; ii < connectedBlocks.length; ++ii) {
 						TileEntity connectedBlockB = connectedBlocks[ii];
 						if (connectedBlockA != connectedBlockB && connectedBlockB instanceof IConnectionProvider) {
-							Pathfinder finder = new PathfinderChecker(((TileEntity) splitPoint).worldObj, (IConnectionProvider) connectedBlockB, new IConnectionProvider[]{splitPoint});
+							Pathfinder finder = new PathfinderChecker(((TileEntity) splitPoint).getWorldObj(), (IConnectionProvider) connectedBlockB, new IConnectionProvider[]{splitPoint});
 							finder.init(new Vector3(connectedBlockA));
 							if (finder.results.size() > 0) {
 								Iterator i$ = finder.closedSet.iterator();
 
 								while (i$.hasNext()) {
 									Vector3 node = (Vector3) i$.next();
-									TileEntity nodeTile = node.getTileEntity(((TileEntity) splitPoint).worldObj);
+									TileEntity nodeTile = node.getTileEntity(((TileEntity) splitPoint).getWorldObj());
 									if (nodeTile instanceof INetworkProvider && nodeTile != splitPoint) {
 										((INetworkProvider) nodeTile).setNetwork(this);
 									}
@@ -312,7 +312,7 @@ public class ElectricityNetwork implements IElectricityNetwork {
 
 								while (i$.hasNext()) {
 									Vector3 node = (Vector3) i$.next();
-									TileEntity nodeTile = node.getTileEntity(((TileEntity) splitPoint).worldObj);
+									TileEntity nodeTile = node.getTileEntity(((TileEntity) splitPoint).getWorldObj());
 									if (nodeTile instanceof INetworkProvider && nodeTile != splitPoint) {
 										newNetwork.getConductors().add((IConductor) nodeTile);
 									}
@@ -331,4 +331,5 @@ public class ElectricityNetwork implements IElectricityNetwork {
 	public String toString() {
 		return "ElectricityNetwork[" + this.hashCode() + "|Wires:" + this.conductors.size() + "]";
 	}
+
 }

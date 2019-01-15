@@ -17,7 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import universalelectricity.core.vector.Vector3;
 
@@ -41,10 +41,8 @@ public class MFFSHelper {
 			}
 
 			if (totalFortron > 0 && totalCapacity > 0) {
-				IFortronFrequency machine;
 				int amountToSet;
 				int requiredFortron;
-				Iterator i$;
 				double capacityPercentage;
 				switch (transferMode) {
 					case EQUALIZE:
@@ -114,7 +112,7 @@ public class MFFSHelper {
 	public static void doTransferFortron(IFortronFrequency transferer, IFortronFrequency receiver, int joules, int limit) {
 		if (transferer != null && receiver != null) {
 			TileEntity tileEntity = (TileEntity) transferer;
-			World world = tileEntity.worldObj;
+			World world = tileEntity.getWorldObj();
 			boolean isCamo = false;
 			if (transferer instanceof IModuleAcceptor) {
 				isCamo = ((IModuleAcceptor) transferer).getModuleCount(ModularForceFieldSystem.itemModuleCamouflage) > 0;
@@ -145,7 +143,7 @@ public class MFFSHelper {
 
 		while (i$.hasNext()) {
 			IBlockFrequency frequencyTile = (IBlockFrequency) i$.next();
-			if (((TileEntity) frequencyTile).worldObj == world && frequencyTile instanceof IInterdictionMatrix) {
+			if (((TileEntity) frequencyTile).getWorldObj() == world && frequencyTile instanceof IInterdictionMatrix) {
 				IInterdictionMatrix interdictionMatrix = (IInterdictionMatrix) frequencyTile;
 				if (interdictionMatrix.isActive() && position.distanceTo(new Vector3((TileEntity) interdictionMatrix)) <= (double) interdictionMatrix.getActionRange()) {
 					return interdictionMatrix;
@@ -227,7 +225,7 @@ public class MFFSHelper {
 				ForgeDirection direction = ForgeDirection.getOrientation(i);
 				Vector3 vector = new Vector3(tileEntity);
 				vector.modifyPositionFromSide(direction);
-				TileEntity checkTile = vector.getTileEntity(tileEntity.worldObj);
+				TileEntity checkTile = vector.getTileEntity(tileEntity.getWorldObj());
 				if (checkTile != null) {
 					checkStack = getFirstItemBlock(checkTile, itemStack, false);
 					if (checkStack != null) {
@@ -247,7 +245,7 @@ public class MFFSHelper {
 
 	public static Block getFilterBlock(ItemStack itemStack) {
 		if (itemStack != null && itemStack.getItem() instanceof ItemBlock && ((ItemBlock) itemStack.getItem()).getBlockID() < Block.blocksList.length) {
-			Block block = Block.blocksList[((ItemBlock) itemStack.getItem()).getBlockID()];
+			Block block = ((ItemBlock) itemStack.getItem()).field_150939_a;
 			if (block.renderAsNormalBlock()) {
 				return block;
 			}
@@ -257,7 +255,7 @@ public class MFFSHelper {
 	}
 
 	public static ItemStack getCamoBlock(IProjector projector, Vector3 position) {
-		if (projector != null && !((TileEntity) projector).worldObj.isRemote && projector != null && projector.getModuleCount(ModularForceFieldSystem.itemModuleCamouflage, new int[0]) > 0) {
+		if (projector != null && !((TileEntity) projector).getWorldObj().isRemote && projector != null && projector.getModuleCount(ModularForceFieldSystem.itemModuleCamouflage, new int[0]) > 0) {
 			if (projector.getMode() instanceof ItemModeCustom) {
 				HashMap fieldMap = ((ItemModeCustom) projector.getMode()).getFieldBlockMap(projector, projector.getModeStack());
 				if (fieldMap != null) {
@@ -301,7 +299,7 @@ public class MFFSHelper {
 
 	public static boolean hasPermission(World world, Vector3 position, Permission permission, EntityPlayer player) {
 		IInterdictionMatrix interdictionMatrix = getNearestInterdictionMatrix(world, position);
-		return interdictionMatrix != null ? isPermittedByInterdictionMatrix(interdictionMatrix, player.username, permission) : true;
+		return interdictionMatrix != null ? isPermittedByInterdictionMatrix(interdictionMatrix, player.getCommandSenderName(), permission) : true;
 	}
 
 	public static boolean hasPermission(World world, Vector3 position, Action action, EntityPlayer player) {
@@ -313,18 +311,19 @@ public class MFFSHelper {
 		boolean hasPermission = true;
 		if (action == Action.RIGHT_CLICK_BLOCK && position.getTileEntity(world) != null && interdictionMatrix.getModuleCount(ModularForceFieldSystem.itemModuleBlockAccess, new int[0]) > 0) {
 			hasPermission = false;
-			if (isPermittedByInterdictionMatrix(interdictionMatrix, player.username, Permission.BLOCK_ACCESS)) {
+			if (isPermittedByInterdictionMatrix(interdictionMatrix, player.getCommandSenderName(), Permission.BLOCK_ACCESS)) {
 				hasPermission = true;
 			}
 		}
 
 		if (hasPermission && interdictionMatrix.getModuleCount(ModularForceFieldSystem.itemModuleBlockAlter, new int[0]) > 0 && (player.getCurrentEquippedItem() != null || action == Action.LEFT_CLICK_BLOCK)) {
 			hasPermission = false;
-			if (isPermittedByInterdictionMatrix(interdictionMatrix, player.username, Permission.BLOCK_ALTER)) {
+			if (isPermittedByInterdictionMatrix(interdictionMatrix, player.getCommandSenderName(), Permission.BLOCK_ALTER)) {
 				hasPermission = true;
 			}
 		}
 
 		return hasPermission;
 	}
+
 }

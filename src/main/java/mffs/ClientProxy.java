@@ -24,7 +24,7 @@ public class ClientProxy extends CommonProxy {
 		super.init();
 		RenderingRegistry.registerBlockHandler(new RenderBlockHandler());
 		RenderingRegistry.registerBlockHandler(new RenderForceField());
-		MinecraftForgeClient.registerItemRenderer(ModularForceFieldSystem.itemCardID.itemID, new RenderIDCard());
+		MinecraftForgeClient.registerItemRenderer(ModularForceFieldSystem.itemCardID.itemid, new RenderIDCard());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFortronCapacitor.class, new RenderFortronCapacitor());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoercionDeriver.class, new RenderCoercionDeriver());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityForceManipulator.class, new RenderForceManipulator());
@@ -36,7 +36,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (tileEntity != null) {
 			if (tileEntity.getClass() == TileEntityFortronCapacitor.class) {
 				return new GuiFortronCapacitor(player, (TileEntityFortronCapacitor) tileEntity);
@@ -81,4 +81,5 @@ public class ClientProxy extends CommonProxy {
 	public void renderHologramMoving(World world, Vector3 position, float red, float green, float blue, int age) {
 		FMLClientHandler.instance().getClient().effectRenderer.addEffect(new FXHologramMoving(world, position, red, green, blue, age));
 	}
+
 }

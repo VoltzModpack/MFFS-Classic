@@ -16,12 +16,12 @@ public class TranslationHelper {
 			if (LanguageRegistry.instance().getStringLocalization("children", language) != "") {
 				try {
 					String[] children = LanguageRegistry.instance().getStringLocalization("children", language).split(",");
-					String[] arr$ = children;
-					int len$ = children.length;
+					String[] arr = children;
+					int len = children.length;
 
-					for (int i$ = 0; i$ < len$; ++i$) {
-						String child = arr$[i$];
-						if (child != "" || child != null) {
+					for (int j = 0; j < len$; ++j) {
+						String child = arr[j];
+						if (child != null && !child.isEmpty()) {
 							LanguageRegistry.instance().loadLocalization(languagePath + language + ".properties", child, false);
 							++languages;
 						}
